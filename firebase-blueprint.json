@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "UserPrivateProfile": {
+      "title": "UserPrivateProfile",
+      "description": "Private user account and PII profile document isolated to the user and admins.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "phone": { "type": "string", "minLength": 8, "maxLength": 24 },
+        "avatarUrl": { "type": "string", "maxLength": 300000 },
+        "city": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "neighborhood": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 200 },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "activeMode": { "type": "string", "enum": ["customer", "provider"] },
+        "isProviderEnabled": { "type": "boolean" },
+        "isAccountVerified": { "type": "boolean" },
+        "isSuspended": { "type": "boolean" },
+        "language": { "type": "string", "enum": ["pt-MZ", "en"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "fullName", "email", "phone", "city", "activeMode", "isProviderEnabled", "isAccountVerified", "createdAt", "updatedAt"]
+    },
+    "PublicProviderProfile": {
+      "title": "PublicProviderProfile",
+      "description": "Publicly discoverable service provider storefront profile without private PII.",
+      "type": "object",
+      "properties": {
+        "providerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "businessName": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "avatarUrl": { "type": "string", "maxLength": 300000 },
+        "bio": { "type": "string", "minLength": 10, "maxLength": 800 },
+        "city": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "neighborhood": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "availabilityStatus": { "type": "string", "enum": ["available", "unavailable", "paused"] },
+        "pauseReason": { "type": "string", "maxLength": 200 },
+        "isVerified": { "type": "boolean" },
+        "isSuspended": { "type": "boolean" },
+        "averageRating": { "type": "number" },
+        "reviewCount": { "type": "integer" },
+        "completedCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["providerId", "displayName", "businessName", "bio", "city", "neighborhood", "lat", "lng", "availabilityStatus", "isVerified", "isSuspended", "averageRating", "reviewCount", "completedCount", "createdAt", "updatedAt"]
+    },
+    "ServiceCategory": {
+      "title": "ServiceCategory",
+      "description": "Marketplace service category.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "namePt": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "nameEn": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "descriptionPt": { "type": "string", "maxLength": 240 },
+        "iconName": { "type": "string", "maxLength": 40 },
+        "isActive": { "type": "boolean" },
+        "sortOrder": { "type": "integer" }
+      },
+      "required": ["id", "namePt", "nameEn", "isActive", "sortOrder"]
+    },
+    "ProviderService": {
+      "title": "ProviderService",
+      "description": "Service offered by a provider with individual pricing and transportation configuration.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "providerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "providerName": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "categoryId": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "categoryName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 10, "maxLength": 1200 },
+        "durationMinutes": { "type": "integer" },
+        "pricingModel": { "type": "string", "enum": ["fixed", "starting_from", "consultation"] },
+        "basePriceMzn": { "type": "number" },
+        "transportFeeMzn": { "type": "number" },
+        "freeTransportRadiusKm": { "type": "number" },
+        "extraKmRateMzn": { "type": "number" },
+        "serviceLocationMode": { "type": "string", "enum": ["provider_location", "customer_location", "both"] },
+        "imageUrl": { "type": "string", "maxLength": 300000 },
+        "isActive": { "type": "boolean" },
+        "providerAvailable": { "type": "boolean" },
+        "city": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "neighborhood": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "providerId", "providerName", "categoryId", "categoryName", "title", "description", "durationMinutes", "pricingModel", "basePriceMzn", "transportFeeMzn", "freeTransportRadiusKm", "extraKmRateMzn", "serviceLocationMode", "isActive", "providerAvailable", "city", "neighborhood", "lat", "lng", "createdAt", "updatedAt"]
+    },
+    "ServiceRequest": {
+      "title": "ServiceRequest",
+      "description": "Booking request submitted by a customer to a provider.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "customerPhone": { "type": "string", "minLength": 8, "maxLength": 24 },
+        "providerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "providerName": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "serviceId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "serviceTitle": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "pricingModel": { "type": "string", "enum": ["fixed", "starting_from", "consultation"] },
+        "preferredDate": { "type": "string", "minLength": 8, "maxLength": 20 },
+        "preferredTime": { "type": "string", "minLength": 4, "maxLength": 12 },
+        "locationMode": { "type": "string", "enum": ["provider_location", "customer_location"] },
+        "customerCity": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "customerNeighborhood": { "type": "string", "maxLength": 100 },
+        "customerAddress": { "type": "string", "maxLength": 240 },
+        "customerLat": { "type": "number" },
+        "customerLng": { "type": "number" },
+        "distanceKm": { "type": "number" },
+        "servicePriceMzn": { "type": "number" },
+        "transportFeeMzn": { "type": "number" },
+        "estimatedTotalMzn": { "type": "number" },
+        "specialInstructions": { "type": "string", "maxLength": 800 },
+        "status": { "type": "string", "enum": ["pending", "accepted", "rejected", "confirmed", "in_progress", "completed", "cancelled"] },
+        "hasReview": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "customerId", "customerName", "providerId", "providerName", "serviceId", "serviceTitle", "pricingModel", "preferredDate", "preferredTime", "locationMode", "customerCity", "distanceKm", "servicePriceMzn", "transportFeeMzn", "estimatedTotalMzn", "status", "hasReview", "createdAt", "updatedAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Public review submitted by a customer after completing a service request.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "requestId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "providerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "serviceId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "serviceTitle": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string", "minLength": 5, "maxLength": 1000 },
+        "photoUrl": { "type": "string", "maxLength": 300000 },
+        "isModeratedHidden": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "requestId", "providerId", "customerId", "customerName", "serviceId", "serviceTitle", "rating", "comment", "isModeratedHidden", "createdAt"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "In-app notification scoped to a recipient user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "recipientUid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "type": { "type": "string", "maxLength": 48 },
+        "title": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "body": { "type": "string", "minLength": 2, "maxLength": 400 },
+        "relatedRequestId": { "type": "string", "maxLength": 128 },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "recipientUid", "type", "title", "body", "isRead", "createdAt"]
+    },
+    "PortfolioItem": {
+      "title": "PortfolioItem",
+      "description": "Work portfolio showcase item published by a provider.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "providerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "categoryName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "imageUrl": { "type": "string", "maxLength": 300000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "providerId", "title", "categoryName", "imageUrl", "createdAt"]
+    },
+    "ContentReport": {
+      "title": "ContentReport",
+      "description": "Moderation report submitted by a user for admin review.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "reporterUid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "targetType": { "type": "string", "enum": ["review", "provider", "service"] },
+        "targetId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "reason": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "details": { "type": "string", "maxLength": 600 },
+        "status": { "type": "string", "enum": ["open", "resolved", "dismissed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "reporterUid", "targetType", "targetId", "reason", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserPrivateProfile" },
+      "description": "Private user account documents containing PII."
+    },
+    "/public_providers/{providerId}": {
+      "schema": { "$ref": "#/entities/PublicProviderProfile" },
+      "description": "Public provider profiles visible in marketplace discovery."
+    },
+    "/service_categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/ServiceCategory" },
+      "description": "Marketplace service categories."
+    },
+    "/provider_services/{serviceId}": {
+      "schema": { "$ref": "#/entities/ProviderService" },
+      "description": "Services registered by providers."
+    },
+    "/service_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/ServiceRequest" },
+      "description": "Service requests between customers and providers."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews for completed service requests."
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/NotificationItem" },
+      "description": "In-app notifications for customers and providers."
+    },
+    "/portfolios/{itemId}": {
+      "schema": { "$ref": "#/entities/PortfolioItem" },
+      "description": "Provider portfolio work items."
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/ContentReport" },
+      "description": "Moderation reports submitted by users."
+    }
+  }
+}

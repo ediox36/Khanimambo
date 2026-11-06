@@ -1,0 +1,6 @@
+{
+  "name": "Kanimambo — Mercado de Serviços em Moçambique",
+  "description": "Plataforma de serviços sob demanda em Moçambique ligando profissionais e empresas locais a clientes em Maputo, Matola e outras cidades.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
